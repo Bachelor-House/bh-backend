@@ -21,4 +21,4 @@ jobs:
           FLYWAY_URL: jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}?sslmode=require
           FLYWAY_USER: ${{ secrets.DB_USER }}
           FLYWAY_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          FLYWAY_LOCATIONS: filesystem:backend/flyway/sql
+          FLYWAY_LOCATIONS: filesystem:Flyway/sql
