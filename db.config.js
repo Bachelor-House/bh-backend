@@ -3,6 +3,7 @@ require('dotenv').config();
 
 // Check if environment is set to 'neon'
 const isNeon = process.env.DB_ENV === 'neon'; 
+console.log('isNeon', isNeon);
 
 // Define pool configuration
 const pool = new Pool(
