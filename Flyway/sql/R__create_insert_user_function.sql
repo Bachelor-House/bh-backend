@@ -4,7 +4,7 @@ BEGIN
   IF EXISTS (SELECT 1 FROM content.users) THEN
     UPDATE content.users SET first_name = p_first_name, last_name = p_last_name WHERE id = (SELECT id FROM content.users LIMIT 1);
   ELSE
-    INSERT INTO content.users (first_name, last_name) VALUES (p_first_name, p_last_name);
+     INSERT INTO content.users (first_name, last_name) VALUES ('sundhar', 'iyyappan');
   END IF;
 END;
 $$ LANGUAGE plpgsql;
