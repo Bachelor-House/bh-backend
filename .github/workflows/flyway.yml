@@ -1,0 +1,24 @@
+name: Flyway Migration
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Flyway Migrations
+        uses: docker://flyway/flyway:latest
+        with:
+          args: migrate
+        env:
+          # Set up connection details from Neon URL
+          FLYWAY_URL: jdbc:postgresql://${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }}/${{ secrets.DB_NAME }}?sslmode=require
+          FLYWAY_USER: ${{ secrets.DB_USER }}
+          FLYWAY_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          FLYWAY_LOCATIONS: filesystem:backend/flyway/sql

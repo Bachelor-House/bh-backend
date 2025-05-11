@@ -1,14 +1,21 @@
-const { Client } = require('pg');
+const { Pool } = require('pg');
 require('dotenv').config();
 
-const client = new Client({
-  user: process.env.USER,
-  host: process.env.HOST,
-  database: process.env.DATABASE,
-  password: process.env.PASSWORD,
-  port:process.env.PORT,
-});
+// Check if environment is set to 'neon'
+const isNeon = process.env.DB_ENV === 'neon'; 
 
-client.connect();
+// Define pool configuration
+const pool = new Pool(
+  isNeon ? {
+    connectionString: process.env.DATABASE_URL,  // For Neon, use the DATABASE_URL
+    ssl: { rejectUnauthorized: false },  // SSL for Neon
+  } : {
+    user: process.env.LOCAL_DB_USER,      // For local, use local database credentials
+    host: process.env.LOCAL_DB_HOST,
+    database: process.env.LOCAL_DB_DATABASE,
+    password: process.env.LOCAL_DB_PASSWORD,
+    port: process.env.LOCAL_DB_PORT,
+  }
+);
 
-module.exports = client;
+module.exports = { pool };
